@@ -97,8 +97,16 @@ python train_models.py --exp-config config/transformer_unet.yaml
 
 ## Evaluation
 
+For slurm users, please use the following command to launch the evaluation script.
+```bash
+sbatch job_scripts/eval_tst_split.sh
+```
+
+For non-slurm users, run the following commands to evaluate the trained model.
+
 ```bash
 # set outdir to the directory of your trained model
+export DISPLAY=:0.0 # in headless machines
 
 # validation: select the best epoch
 for step in {5000..300000..5000}
@@ -124,7 +132,7 @@ python summarize_tst_results.py --result_file ${outdir}/preds/seed200/results.js
 ```
 
 We also provided trained models in [Dropbox](https://www.dropbox.com/s/o4na7namn1ujhng/transformer_unet%2Bgripper_attn_multi32_300k.tar.gz?dl=0) for the multi-task setting (10 tasks).
-You could obtain results as follows:
+You could obtain results as follows which are similar to the results in the paper:
 
 |        | pick_ and_lift | pick_up _cup | put_knife_on_ chopping_board | put_money _in_safe | push_ button | reach_ target | slide_block _to_target | stack _wine | take_money _out_safe | take_umbrella_out_ of_umbrella_stand |  Avg. |
 |:------:|:--------------:|:------------:|:----------------------------:|:------------------:|:------------:|:-------------:|:----------------------:|:-----------:|:--------------------:|:------------------------------------:|:-----:|

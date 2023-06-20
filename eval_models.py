@@ -52,15 +52,12 @@ class Actioner(BaseActioner):
         if config.checkpoint:
             checkpoint = torch.load(
                 config.checkpoint, map_location=lambda storage, loc: storage)
-            self.model.data_stats = checkpoint["data_stats"]
             if 'state_dict' in checkpoint:
                 checkpoint = checkpoint['state_dict']
             self.model.load_state_dict(checkpoint, strict=True)
 
         self.model.to(self.device)
         self.model.eval()
-
-        self.data_stats = self.model.data_stats 
 
         self.use_history = config.MODEL.model_class == 'TransformerUNet'
         self.use_instr_embed = config.MODEL.use_instr_embed
@@ -104,14 +101,15 @@ class Actioner(BaseActioner):
         rgb = torch.from_numpy(rgb).float().permute(0, 3, 1, 2)
         # # normalise to [-1, 1]
         # rgb = 2 * (rgb / 255.0 - 0.5)
+        rgb = transforms_f.normalize(
+            rgb.float(), 
+            [0.485, 0.456, 0.406], 
+            [0.229, 0.224, 0.225]
+        )
 
         if self.gripper_channel == "attn":
             gripper_imgs = torch.from_numpy(
                 obs["gripper_imgs"]).float()  # (N, 1, H, W)
-
-        rgb = transforms_f.normalize(rgb.float(), self.data_stats["rgb"]["mean"], self.data_stats["rgb"]["std"])        
-        
-        if self.gripper_channel == "attn":
             rgb = torch.cat([rgb, gripper_imgs], dim=1)
 
         pcd = np.stack(obs['pc'], 0)  # (N, H, W, C)

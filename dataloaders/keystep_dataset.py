@@ -181,8 +181,13 @@ class KeystepDataset(Dataset):
         # The last one is the stop observation
         rgbs = torch.from_numpy(value['rgb'][:-1]).float().permute(0, 1, 4, 2, 3)  # (T, N, C, H, W)
         pcs = torch.from_numpy(value['pc'][:-1]).float().permute(0, 1, 4, 2, 3)
-        # normalise to [-1, 1]
-        rgbs = 2 * (rgbs / 255.0 - 0.5)
+        # # normalise to [-1, 1]
+        # rgbs = 2 * (rgbs / 255.0 - 0.5)
+        rgbs = transforms_f.normalize(
+            rgbs.float(), 
+            [0.485, 0.456, 0.406], 
+            [0.229, 0.224, 0.225]
+        )
 
         num_steps, num_cameras, _, im_height, im_width  = rgbs.size()
 

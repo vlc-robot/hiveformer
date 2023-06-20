@@ -1,0 +1,14 @@
+__pycache__
+.idea
+*.pyc
+__pycache__/
+core-python-*
+bug-report-*
+
+data
+notebooks
+PyRep
+RLBench
+
+*.lock
+.~lock.*

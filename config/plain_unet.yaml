@@ -1,0 +1,59 @@
+SEED: 2023
+output_dir: 'data/exprs/plain_unet/pick_up_cup+0/seed0'
+checkpoint: null
+
+train_batch_size: 16
+gradient_accumulation_steps: 1
+num_epochs: null
+num_train_steps: 100000
+warmup_steps: 2000
+log_steps: 1000
+save_steps: 5000
+
+optim: 'adamw'
+learning_rate: 5e-4
+lr_sched: 'linear' # inverse_sqrt, linear
+betas: [0.9, 0.98]
+weight_decay: 0.001
+grad_norm: 5
+dropout: 0.1
+n_workers: 0
+pin_mem: True
+
+DATASET:
+  dataset_class: 'keystep_stepwise'
+
+  data_dir: 'data/train_dataset/keysteps/seed0'
+  taskvars: ('pick_up_cup+0', )
+  # taskvars: ['pick_and_lift+0',
+  #             'pick_up_cup+0',
+  #             'put_knife_on_chopping_board+0',
+  #             'put_money_in_safe+0',
+  #             'push_button+0',
+  #             'reach_target+0',
+  #             'slide_block_to_target+0',
+  #             'stack_wine+0',
+  #             'take_money_out_safe+0',
+  #             'take_umbrella_out_of_umbrella_stand+0']
+  instr_embed_file: null
+  # instr_embed_file: 'data/train_dataset/taskvar_instrs/clip'
+  use_instr_embed: 'none' # none, avg, last, all
+  gripper_channel: False
+  cameras: ('left_shoulder', 'right_shoulder', 'wrist')
+  is_training: True
+  in_memory: True
+  num_workers: 0
+
+MODEL:
+  model_class: 'PlainUNet'
+
+  unet: True
+  num_tasks: 1
+  use_instr_embed: 'none' # none, avg, last, all
+  instr_embed_size: 512
+  max_steps: 20
+
+  num_layers: 4
+  hidden_size: 16
+  gripper_channel: False
+

@@ -112,6 +112,8 @@ class TransformerUNet(PlainUNet):
         )
         x = self.visual_embedding(x)
 
+        enc_fts[-1] = einops.rearrange(x, "b t n (h w) c -> (b t n) c h w", h=self.latent_im_size[0], w=self.latent_im_size[1])
+
         step_embeds = self.step_embedding(batch['step_ids'])  # (B, T, C)
         cam_embeds = self.cam_embedding(
             torch.arange(num_cams).long().to(device)

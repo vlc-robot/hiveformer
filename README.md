@@ -131,7 +131,7 @@ python eval_models.py \
 python summarize_tst_results.py --result_file ${outdir}/preds/seed200/results.jsonl
 ```
 
-We also provided trained models in [Dropbox](https://www.dropbox.com/s/o4na7namn1ujhng/transformer_unet%2Bgripper_attn_multi32_300k.tar.gz?dl=0) for the multi-task setting (10 tasks).
+We provided trained models in [Dropbox](https://www.dropbox.com/s/o4na7namn1ujhng/transformer_unet%2Bgripper_attn_multi32_300k.tar.gz?dl=0) for the multi-task setting (10 tasks).
 You could obtain results as follows which are similar to the results in the paper:
 
 |        | pick_ and_lift | pick_up _cup | put_knife_on_ chopping_board | put_money _in_safe | push_ button | reach_ target | slide_block _to_target | stack _wine | take_money _out_safe | take_umbrella_out_ of_umbrella_stand |  Avg. |
@@ -142,4 +142,7 @@ You could obtain results as follows which are similar to the results in the pape
 |  Avg.  |      90.67     |     78.73    |             73.93            |        85.87       |     81.53    |     100.00    |          72.33         |    86.47    |         71.87        |                 86.33                | 82.77 |
 
 
+We also trained the hiveformer model on 74 RLBench tasks.
+For the single-task setting, it achieves 66.09% success rate on average.
+For the multi-task setting, it achieves 49.22%. The multi-task policy is provided in [Dropbox](https://www.dropbox.com/sh/fwxtojgiusv8v82/AABQkDczpBOZYKp2tp1q1gMja?dl=0).
 

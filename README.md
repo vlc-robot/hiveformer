@@ -32,7 +32,7 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 2. Dataset generation
 
-Option 1: Use our [generated datasets](https://www.dropbox.com/s/zrth410b4voi4ut/train_dataset.tar.gz?dl=0) including the keystep trajectories and instruction embeddings.
+Option 1: Use our [generated datasets](https://drive.google.com/drive/folders/1BCvGrTK_cLkMuF9XR40Xx_QciXM3htwh?usp=drive_link) including the keystep trajectories and instruction embeddings.
 
 Option 2: generate the dataset on your own.
 ```bash
